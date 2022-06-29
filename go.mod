@@ -5,6 +5,7 @@ go 1.16
 require (
 	github.com/cosmos/cosmos-sdk v0.42.6
 	github.com/gogo/protobuf v1.3.3
+	github.com/golang/protobuf v1.5.2
 	github.com/google/go-cmp v0.5.8 // indirect
 	github.com/gorilla/mux v1.8.0
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
@@ -17,7 +18,7 @@ require (
 	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd // indirect
 	google.golang.org/genproto v0.0.0-20220519153652-3a47de7e79bd
 	google.golang.org/grpc v1.46.2
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 replace google.golang.org/grpc => google.golang.org/grpc v1.33.2
