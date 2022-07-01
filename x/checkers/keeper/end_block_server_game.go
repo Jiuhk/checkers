@@ -26,7 +26,6 @@ func (k Keeper) ForfeitExpiredGames(goCtx context.Context) {
 
 	storedGameId := nextGame.FifoHead
 	var storedGame types.StoredGame
-
 	for {
 		// Finished moving along
 		if strings.Compare(storedGameId, types.NoFifoIdKey) == 0 {
@@ -46,11 +45,15 @@ func (k Keeper) ForfeitExpiredGames(goCtx context.Context) {
 			if storedGame.MoveCount <= 1 {
 				// No point in keeping a game that was never really played
 				k.RemoveStoredGame(ctx, storedGameId)
+				if storedGame.MoveCount == 1 {
+					k.MustRefundWager(ctx, &storedGame)
+				}
 			} else {
 				storedGame.Winner, found = opponents[storedGame.Turn]
 				if !found {
 					panic(fmt.Sprintf(types.ErrCannotFindWinnerByColor.Error(), storedGame.Turn))
 				}
+				k.MustPayWinnings(ctx, &storedGame)
 				k.SetStoredGame(ctx, storedGame)
 			}
 			ctx.EventManager().EmitEvent(
